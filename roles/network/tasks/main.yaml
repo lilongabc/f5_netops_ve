@@ -1,0 +1,28 @@
+---
+#reference to link : https://devcentral.f5.com/questions/translate-configuration-into-tmsh-commands
+
+- name: create vlan configuration ------ vlan_internal
+  shell: tmsh create net vlan /Common/{{vlan_a_name}}  { interfaces  add { {{vlan_a_interface}} } }
+- name: create vlan configuration ------ vlan_ha
+  shell: tmsh create net vlan /Common/{{vlan_ha_name}}  { interfaces  add { {{vlan_ha_interface}} } }
+- name: create vlan selfip------ vlan_ha_selfip
+  shell:  tmsh create /net self /Common/vlan_ha_selfip address {{vlan_ha_selfip}}/{{vlan_ha_netmask }} vlan {{vlan_ha_name}} allow-service default traffic-group traffic-group-local-only
+- name: create vlan selfip------vlan_internal_selfip
+  shell:  tmsh create /net self /Common/vlan_internal_selfip  address {{vlan_a_selfip}}/{{vlan_a_netmask}}  vlan {{vlan_a_name}} allow-service none traffic-group traffic-group-local-only
+
+- name: set register args
+  shell: tmsh list /sys global-settings hostname
+  register: result
+- debug:
+    var: result.stdout_lines[1]
+
+- name: create vlan floatingip------vlan_internal_floatingip
+  shell:  tmsh create /net self /Common/vlan_internal_floatingip  address {{vlan_a_floatingip}}/{{vlan_a_floatingip_netmask}}  vlan {{vlan_a_name}} allow-service none traffic-group traffic-group-1
+  when: result.stdout_lines[1] == '    hostname bigip_a.ansible.com'
+
+- name: create default gateway route-------default
+  shell: tmsh create /net route default gw {{default_route}}
+  when: result.stdout_lines[1] == '    hostname bigip_a.ansible.com'
+
+- name: SAVE----CONFIG
+  shell: tmsh save /sys config partitions all

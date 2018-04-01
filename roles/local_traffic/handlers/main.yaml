@@ -1,0 +1,14 @@
+---
+- name: exec tmsh script create vs and pool
+  shell: /bin/bash /var/tmp/create_ltm1.sh
+  notify: set register sync
+
+- name: set register sync
+  shell: tmsh list /sys global-settings hostname
+  register: result
+  notify: bigip_a sync to group K63470472
+
+- name: bigip_a sync to group K63470472
+  shell: tmsh run cm config-sync force-full-load-push to-group my_device_group
+  when: result.stdout_lines[1] == '    hostname bigip_a.ansible.com'
+

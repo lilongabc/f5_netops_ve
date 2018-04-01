@@ -1,0 +1,13 @@
+---
+- namefig partitions all: Used to jinjia2 Create VS and POOL
+  template:
+    src: test_loop.j2
+    dest: /var/tmp/create_ltm1.sh
+    mode: 655
+    backup: yes
+    group: root
+    owner: root
+  notify: exec tmsh script create vs and pool
+
+- name: SAVE----CONFIG
+  shell: tmsh save /sys con

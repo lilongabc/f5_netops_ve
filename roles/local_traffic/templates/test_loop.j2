@@ -1,0 +1,15 @@
+#!/bin/bash
+#Create vs and pool
+{% set portlist=['80','8080','8081','8082'] %}
+{% for port in portlist %}
+    #Create pool
+    tmsh create /ltm pool lilong_{{port}} monitor tcp load-balancing-mode least-connections-member
+
+    #Add pool member to pool
+    {% for i in range(30,35) %}
+     tmsh modify /ltm pool lilong_{{port}} members add { 172.16.0.{{i}}:{{port}} }
+    {% endfor %}
+
+    #Create vs {{port}} associated to pool {{port}}
+    tmsh create /ltm virtual /Common/vs_lilong_{{port}}  destination 10.0.0.220:{{port}} ip-protocol tcp mask 255.255.255.255 persist replace-all-with { source_addr } pool lilong_{{port}} profiles add { tcp } source 0.0.0.0/0 source-address-translation { type automap } translate-address enabled translate-port enabled
+{% endfor %}

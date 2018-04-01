@@ -1,0 +1,17 @@
+---
+- name: modify ntp configuration
+  shell: tmsh modify sys db ntp.servers value "{{ntp}}"
+- name: modify dns configuration
+  shell: tmsh modify sys db dns.nameservers value "{{ldns}}"
+- name: modify records per screen configuration
+  shell: tmsh modify sys db ui.system.preferences.recordsperscreen value "{{per_screen}}"
+- name: modify advanced selection configuration
+  shell: tmsh modify sys db ui.system.preferences.advancedselection value "{{advanced_selection}}"
+- name: modify start screen configuration
+  shell: tmsh modify sys db ui.system.preferences.startscreen value "{{start_screen}}"
+- name: modify hostname configuration
+  shell: tmsh modify sys db hostname value "{{hostname}}"
+- name: modify NTP timezone configuration
+  shell: tmsh modify sys db ntp.timezone value "{{timezones}}"
+- name: Quit GUI the wizard mode
+  shell: tmsh modify sys db setup.run value false

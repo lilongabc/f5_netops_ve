@@ -1,0 +1,8 @@
+#---
+#username: admin
+#password: admin
+#
+#banner_text: "--------Welcome to Onboarding BIGIP----------"
+#
+#hostname: 'bigip_a.ansible.com'
+
