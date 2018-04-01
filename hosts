@@ -1,0 +1,56 @@
+#ansible-playbook xxx.yml --syntax-check
+[bigip_all:children]
+bigip_a
+bigip_b
+
+
+[bigip_a]
+192.168.0.181
+[bigip_a:vars]
+ansible_ssh_user = root
+ansible_ssh_pass = default
+hostname = bigip_a.ansible.com
+
+#bigip_a networks config
+vlan_a_selfip = '10.0.0.231'
+vlan_a_netmask = '255.255.255.0'
+
+vlan_ha_selfip = '1.1.1.1'
+vlan_ha_netmask = '255.255.255.252'
+
+
+[bigip_b]
+192.168.0.180
+[bigip_b:vars]
+ansible_ssh_user = root
+ansible_ssh_pass = default
+hostname = bigip_b.ansible.com
+
+#bigip_b networks config
+vlan_a_selfip = '10.0.0.232'
+vlan_a_netmask = '255.255.255.0'
+
+vlan_ha_selfip = '1.1.1.2'
+vlan_ha_netmask = '255.255.255.252'
+
+[bigip_all:vars]
+ntp = 'edu.ntp.org.cn cn.ntp.org.cn '
+ldns = '8.8.8.8 114.114.114.114'
+per_screen = '100'
+advanced_selection = 'advanced'
+start_screen = 'virtual_servers'
+timezones = 'Asia/Shanghai'
+
+#Gloubal networks config
+vlan_a_name = 'vlan_internal'
+vlan_a_interface = '1.1'
+vlan_ha_name = 'vlan_ha'
+vlan_ha_interface = '1.3'
+#bigip_a only
+vlan_a_floatingip = '10.0.0.230'
+vlan_a_floatingip_netmask = '255.255.255.0'
+default_route = '10.0.0.254'
+
+iso = 'BIGIP-12.1.1.0.0.184.iso'
+hotfix = 'Hotfix-BIGIP-12.1.1.2.0.204-HF2.iso'
+

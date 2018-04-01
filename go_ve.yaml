@@ -1,0 +1,10 @@
+---
+- hosts: bigip_all
+  gather_facts: false
+  roles:
+   - initialization
+   - network
+   - device_management
+   - local_traffic
+
+
