@@ -18,21 +18,21 @@
 
 >（2）保证你的python 2 环境有如下module：
 
-*import os
+import os
 
-*import sys
+import sys
 
-*import traceback
+import traceback
 
-*import base64
+import base64
 
-*import urllib
+import urllib
 
-*import urllib2
+import urllib2
 
-*from suds.client import Client
+from suds.client import Client
 
-*import bigsuds
+import bigsuds
 
 >（3）修改ansible host 文件对两台设备的变量根据实际情况进行修改
 
