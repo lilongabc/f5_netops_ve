@@ -51,6 +51,5 @@ vlan_a_floatingip = '10.0.0.230'
 vlan_a_floatingip_netmask = '255.255.255.0'
 default_route = '10.0.0.254'
 
-iso = 'BIGIP-12.1.1.0.0.184.iso'
-hotfix = 'Hotfix-BIGIP-12.1.1.2.0.204-HF2.iso'
+
 
