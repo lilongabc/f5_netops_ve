@@ -14,6 +14,6 @@ galaxy_info:
     - netops
     - F5ve
     - F5
- dependencies:
-  - { role: lilongabc.f5_netops_ve }
+  dependencies:
+    - { role: lilongabc.f5_netops_ve }
  
