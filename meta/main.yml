@@ -15,5 +15,5 @@ galaxy_info:
     - F5ve
     - F5
  dependencies:
-  - { role: lilongholyzone,f5_netops_ve }
+  - { role: lilongabc.f5_netops_ve }
  
